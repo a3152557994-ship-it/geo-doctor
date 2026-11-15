@@ -1,0 +1,33 @@
+# GEO Doctor
+
+> AI Search & ChatGPT Visibility Diagnostic Workbench ($29 / ¥99 one-time Fix Pack, $199 / ¥499 Done-For-You deployment) for e-commerce stores, Shopify brands, and SaaS websites. Runs 12 browser-local checks and generates tailored /llms.txt, /llms-full.txt, Schema.org JSON-LD, robots.txt patches, and 20 buyer-intent audit prompts.
+
+- Canonical URL: https://a3152557994-ship-it.github.io/geo-doctor/
+- Primary Category: SoftwareApplication (AI SEO / GEO Diagnostic Tool)
+- Pricing: $29 USD (¥99 CNY) Single-Site Fix Pack | $199 USD (¥499 CNY) Shopify & WordPress Done-For-You Deployment
+- Availability: https://schema.org/InStock
+
+## Core Diagnostic Checks (12 Signals, 0-100 Score)
+- OAI-SearchBot explicit crawl permission in /robots.txt
+- GPTBot, ClaudeBot, and PerplexityBot access policy check
+- /llms.txt presence and Markdown structure validation
+- JSON-LD core entity check (Product, SoftwareApplication, LocalBusiness)
+- Offer price, priceCurrency, and availability readability
+- FAQPage structured Q&A citation readiness
+- AggregateRating verified rating trust signal
+- Title and meta description buyer-intent match
+- Canonical URL and og:url consistency
+- Semantic heading hierarchy (single H1 and descriptive H2s)
+- First-screen plaintext pricing and purchase CTA visibility
+- Sitemap XML and multilingual hreflang discovery tags
+
+## Pricing & Licensing
+- Free Tier ($0): Unlimited 12-point diagnostics (Live URL + Offline HTML Mode) + free 10-line custom /llms.txt preview
+- Single-Site Fix Pack ($29 USD / ¥99 CNY one-time): Unlocks full /llms.txt, /llms-full.txt, zero-error <head> JSON-LD, robots.txt patch, and 20 tailored buyer-intent prompts via offline Ed25519 OPC1 license key
+- Done-For-You Deployment ($199 USD / ¥499 CNY): Manual Shopify theme.liquid or WordPress head injection, rich-results check, and 2 post-delivery revisions
+
+## Links & Endpoints
+- [GEO Doctor Diagnostic Studio](https://a3152557994-ship-it.github.io/geo-doctor/): Live dual-mode GEO visibility auditor
+- [robots.txt](https://a3152557994-ship-it.github.io/geo-doctor/robots.txt): Crawler rules allowing OAI-SearchBot, PerplexityBot, ClaudeBot, GPTBot
+- [sitemap.xml](https://a3152557994-ship-it.github.io/geo-doctor/sitemap.xml): XML sitemap index
+- [GitHub Repository](https://github.com/a3152557994-ship-it/geo-doctor): Source code and zero-dependency Node test suite

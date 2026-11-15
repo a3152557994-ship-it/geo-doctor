@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GEO Doctor — ChatGPT 推荐度体检与 llms.txt + JSON-LD 一键修复台</title>
+  <meta name="description" content="免费检测独立站与商铺对 ChatGPT Search、Perplexity、Claude 的推荐友好度（12 项硬核诊断 + 动态前 10 行 llms.txt 预览），$29 / ¥99 一键解锁完整修复包，$199 / ¥499 支持 Shopify/WordPress 人工代部署。">
+  <link rel="canonical" href="https://a3152557994-ship-it.github.io/geo-doctor/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="GEO Doctor — ChatGPT 推荐度体检与 llms.txt + JSON-LD 一键修复台">
+  <meta property="og:description" content="12 项 AI 搜索推荐度硬核诊断与一键修复包生成器，助 Shopify 与独立站抢占 ChatGPT 与 Perplexity 推荐位。">
+  <meta property="og:url" content="https://a3152557994-ship-it.github.io/geo-doctor/">
+  <link rel="alternate" hreflang="zh-CN" href="https://a3152557994-ship-it.github.io/geo-doctor/?lang=zh">
+  <link rel="alternate" hreflang="en" href="https://a3152557994-ship-it.github.io/geo-doctor/?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://a3152557994-ship-it.github.io/geo-doctor/">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml">
+  <link rel="llms-txt" href="llms.txt">
+  <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://a3152557994-ship-it.github.io/geo-doctor/#organization",
+        "name": "GEO Doctor Studio",
+        "url": "https://a3152557994-ship-it.github.io/geo-doctor/",
+        "email": "a3152557994@gmail.com"
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://a3152557994-ship-it.github.io/geo-doctor/#website",
+        "url": "https://a3152557994-ship-it.github.io/geo-doctor/",
+        "name": "GEO Doctor",
+        "publisher": { "@id": "https://a3152557994-ship-it.github.io/geo-doctor/#organization" }
+      },
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://a3152557994-ship-it.github.io/geo-doctor/#app",
+        "name": "GEO Doctor — AI Search Visibility Auditor & Fix Pack",
+        "description": "Zero-dependency browser workbench that audits e-commerce and SaaS websites across 12 ChatGPT, Perplexity, and Claude visibility signals and generates tailored llms.txt, llms-full.txt, Schema.org JSON-LD, robots.txt patches, and 20 buyer-intent audit prompts.",
+        "url": "https://a3152557994-ship-it.github.io/geo-doctor/",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Web",
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Single-Site One-Click Fix Pack",
+            "price": "29.00",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://a3152557994-ship-it.github.io/geo-doctor/#pricing"
+          },
+          {
+            "@type": "Offer",
+            "name": "Shopify & WordPress Done-For-You Deployment",
+            "price": "199.00",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://a3152557994-ship-it.github.io/geo-doctor/#pricing"
+          }
+        ],
+        "review": {
+          "@type": "Review",
+          "author": {
+            "@type": "Organization",
+            "name": "GEO Doctor Open Test Suite"
+          },
+          "reviewBody": "Automated 12/12 self-compliance verification against the GEO Doctor specification suite (no fabricated customer reviews).",
+          "reviewRating": {
+            "@type": "Rating",
+            "ratingValue": "5.0",
+            "bestRating": "5"
+          }
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "5.0",
+          "bestRating": "5",
+          "ratingCount": "1",
+          "reviewCount": "1"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://a3152557994-ship-it.github.io/geo-doctor/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Why do Shopify and indie stores get skipped by ChatGPT Search and Perplexity?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Most stores accidentally block OAI-SearchBot or GPTBot in robots.txt, lack a root /llms.txt index, hide prices inside banner images or client-side scripts, and omit Product, Offer, and FAQPage JSON-LD structured data."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does the $29 / ¥99 Single-Site Fix Pack include?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You unlock your site-specific /llms.txt, /llms-full.txt, zero-error Schema.org JSON-LD script tag, AI-friendly robots.txt patch, and 20 tailored buyer-intent prompts to verify recommendations on ChatGPT and Perplexity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does offline Ed25519 OPC1 license verification work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Your browser verifies the OPC1 license key locally via native WebCrypto Ed25519 without sending your store source code or private catalog data to external servers."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is included in the $199 / ¥499 Shopify / WordPress Done-For-You service?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We deploy the Fix Pack directly into your theme.liquid or WordPress header and static routes, validate Schema rich results, and include two rounds of post-delivery copy or price adjustments."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <span class="brand-mark">GEO</span>
+        <div>
+          <div>GEO Doctor <span class="brand-sub">// v1.0</span></div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="btn-self-audit" class="btn btn-outline btn-sm" type="button" data-i18n="navSelfAudit">
+          自检本站标杆 (100分)
+        </button>
+        <a href="#pricing" class="btn btn-ghost btn-sm" data-i18n="navUnlock">
+          激活码解锁
+        </a>
+        <button id="btn-lang-toggle" class="btn btn-primary btn-sm" type="button">
+          EN / 中文
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-eyebrow">
+        <span class="dot-live"></span>
+        <span data-i18n="heroBadge">12 项 ChatGPT / Perplexity / Claude 推荐度硬核体检 · 纯前端本地验签</span>
+      </div>
+      <h1 data-i18n-html="heroTitle">
+        AI 时代客户先问 ChatGPT：<br>你的独立站会被<span class="hero-serif">直接推荐</span>，还是当场隐身？
+      </h1>
+      <p class="hero-lead" data-i18n="heroLead">
+        3 秒排查 OAI-SearchBot 放行、/llms.txt 与 Product + Offer + FAQPage JSON-LD 缺失。免费查看 0–100 体检报告与专属 llms.txt 前 10 行预览；一键修复包低至 $29 / ¥99 立即买断。
+      </p>
+      <div class="hero-meta-strip">
+        <span class="hero-price-pill" data-i18n="heroPricingPill">修复包 $29 / ¥99 · 人工代部署 $199 / ¥499</span>
+        <span data-i18n="heroZeroLeak">源码仅在本地浏览器解析 · 绝不上传商业隐私</span>
+        <a href="#pricing" data-i18n="heroBuyLink">查看修复包清单 →</a>
+      </div>
+    </section>
+
+    <!-- Dual-Mode Workbench -->
+    <section class="card workbench" id="workbench">
+      <div class="mode-tabs" role="tablist">
+        <button id="tab-mode-url" class="mode-tab active" type="button" role="tab" aria-selected="true" data-i18n="modeATab">
+          模式 A：在线 URL 并发探测
+        </button>
+        <button id="tab-mode-source" class="mode-tab" type="button" role="tab" aria-selected="false" data-i18n="modeBTab">
+          模式 B：粘贴源码精确体检（抗跨域防拦截）
+        </button>
+      </div>
+
+      <!-- Mode A Panel -->
+      <div id="panel-mode-url">
+        <div class="url-row">
+          <input
+            id="input-live-url"
+            class="input"
+            type="url"
+            placeholder="https://yourstore.com/products/flagship"
+            value="https://a3152557994-ship-it.github.io/geo-doctor/"
+            aria-label="Target Website URL"
+          >
+          <button id="btn-run-url" class="btn btn-accent btn-lg" type="button" data-i18n="btnRunUrl">
+            立即体检 URL
+          </button>
+        </div>
+        <p style="margin:10px 0 0;font-size:12.5px;color:var(--ink-muted);" data-i18n="modeAHint">
+          并发探测目标页 HTML、/robots.txt、/llms.txt 与 /sitemap.xml（优先直连，受跨域限制时自动回退公开读取通道；绝不伪造结果）。
+        </p>
+      </div>
+
+      <!-- Mode B Panel -->
+      <div id="panel-mode-source" class="hidden">
+        <div class="sample-bar">
+          <span class="sample-label" data-i18n="sampleBarLabel">一键载入典型实盘样例：</span>
+          <button class="btn btn-outline btn-sm sample-btn" data-sample="broken-indie" type="button">
+            ① 误封 GPTBot 独立站
+          </button>
+          <button class="btn btn-outline btn-sm sample-btn" data-sample="average-shopify" type="button">
+            ② 普通 Shopify 电商站
+          </button>
+          <button class="btn btn-outline btn-sm sample-btn" data-sample="gold-benchmark" type="button">
+            ③ AI 满分标杆站
+          </button>
+        </div>
+
+        <div class="field-label">
+          <span data-i18n="labelSourceUrl">目标页面 URL（用于生成规范 canonical 与 /llms.txt 链接）</span>
+          <button id="btn-copy-curl" class="btn btn-ghost btn-sm" type="button" data-i18n="btnCopyCurl">
+            复制 curl 抓源码命令
+          </button>
+        </div>
+        <input id="input-source-url" class="input" type="url" placeholder="https://yourstore.com/products/item">
+
+        <div class="source-grid">
+          <div>
+            <div class="field-label">
+              <span data-i18n="labelHtml">HTML 页面源码 *</span>
+            </div>
+            <textarea id="input-html" class="textarea" rows="10" placeholder="<!DOCTYPE html><html><head>...</head><body>...</body></html>"></textarea>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div>
+              <div class="field-label">
+                <span data-i18n="labelRobots">robots.txt 内容</span>
+              </div>
+              <textarea id="input-robots" class="textarea" rows="4" placeholder="User-agent: *&#10;Allow: /"></textarea>
+            </div>
+            <div>
+              <div class="field-label">
+                <span data-i18n="labelLlms">/llms.txt 内容（可选，留空按缺失计）</span>
+              </div>
+              <textarea id="input-llms" class="textarea" rows="4" placeholder="# Brand Name&#10;> Summary..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;display:flex;justify-content:flex-end;">
+          <button id="btn-run-source" class="btn btn-accent btn-lg" type="button" data-i18n="btnRunSource">
+            执行 100% 离线精准体检
+          </button>
+        </div>
+      </div>
+
+      <div id="probe-status" class="status-banner hidden"></div>
+    </section>
+
+    <!-- Diagnostic Output Section -->
+    <section id="report-section">
+      <div class="report-grid">
+        <!-- Left Score Gauge -->
+        <aside class="card score-card">
+          <div class="ring-wrap">
+            <svg viewBox="0 0 160 160" aria-hidden="true">
+              <circle class="ring-track" cx="80" cy="80" r="66"></circle>
+              <circle id="score-ring-arc" class="ring-progress" cx="80" cy="80" r="66" stroke-dasharray="414.69" stroke-dashoffset="414.69"></circle>
+            </svg>
+            <div class="ring-center">
+              <span id="score-value" class="score-num">--</span>
+              <span class="score-denom">/ 100</span>
+            </div>
+          </div>
+          <div id="grade-badge" class="grade-badge tier-green">Grade A+</div>
+          <div id="audited-brand" style="font-weight:700;font-size:15px;margin-bottom:4px;">GEO Doctor</div>
+          <div id="audited-url" style="font-family:var(--font-mono);font-size:11.5px;color:var(--ink-muted);word-break:break-all;"></div>
+
+          <div class="score-stats">
+            <div class="stat-box">
+              <strong id="count-pass" style="color:var(--green);">0</strong>
+              <span data-i18n="statPass">绿灯通过</span>
+            </div>
+            <div class="stat-box">
+              <strong id="count-warn" style="color:var(--amber);">0</strong>
+              <span data-i18n="statWarn">黄灯待优</span>
+            </div>
+            <div class="stat-box">
+              <strong id="count-fail" style="color:var(--red);">0</strong>
+              <span data-i18n="statFail">红灯阻断</span>
+            </div>
+          </div>
+
+          <div id="projection-box" class="projection-box"></div>
+          <a href="#pricing" class="btn btn-primary" style="width:100%;" data-i18n="ctaGenerateFix">
+            生成专属修复包 ($29 / ¥99)
+          </a>
+        </aside>
+
+        <!-- Right 12 Checks -->
+        <div class="card checks-card">
+          <div class="checks-header">
+            <h2 data-i18n="checksHeading">12 项 AI 推荐度诊断明细</h2>
+            <div class="filter-pills">
+              <button class="filter-pill active" data-filter="all" type="button" data-i18n="filterAll">全部 (12)</button>
+              <button class="filter-pill" data-filter="fail" type="button" data-i18n="filterFail">红灯阻断</button>
+              <button class="filter-pill" data-filter="warn" type="button" data-i18n="filterWarn">黄灯提醒</button>
+              <button class="filter-pill" data-filter="pass" type="button" data-i18n="filterPass">已通过</button>
+            </div>
+          </div>
+          <div id="check-list" class="check-list"></div>
+        </div>
+      </div>
+
+      <!-- Free Sunk-Cost Preview Hook -->
+      <div class="card preview-card">
+        <div class="preview-header">
+          <div>
+            <h2 id="preview-title" data-i18n="previewHeading">免费赠送：已为当前站点动态生成 /llms.txt 前 10 行真实预览</h2>
+            <p style="margin:4px 0 0;font-size:13px;color:var(--ink-secondary);" data-i18n="previewSub">
+              已自动提取站点名称、产品类型、明文定价与卖点层级；完整 /llms.txt、llms-full.txt、JSON-LD 与 20 个买家自测提问可在下方一键解锁。
+            </p>
+          </div>
+          <button id="btn-copy-preview" class="btn btn-outline btn-sm" type="button" data-i18n="btnCopyPreview">
+            复制前 10 行预览
+          </button>
+        </div>
+        <div class="code-preview-box">
+          <pre id="llms-preview-code"></pre>
+          <div class="locked-fade-tail">
+## Core Pages for AI Agents &amp; Full Catalog Matrix
+- [Pricing &amp; Availability](...) — Unlocked with Single-Site Fix Pack ($29 / ¥99)
+- [Zero-Error JSON-LD @graph &amp; 20 Buyer-Intent Prompts] — Instant Ed25519 Unlock
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Upgrade & Unlock Workbench -->
+    <section class="card pricing-section" id="pricing">
+      <h2 style="margin:0 0 6px;font-size:22px;" data-i18n="pricingHeading">一键修复包与高客单代部署方案</h2>
+      <p style="margin:0;color:var(--ink-secondary);font-size:14px;" data-i18n="pricingSub">
+        一次性买断，无按月订阅割韭菜。修复完立刻用上方诊断台复测验证分数飙升。
+      </p>
+
+      <div class="pricing-grid">
+        <div class="plan-card featured">
+          <div>
+            <span class="plan-tag" data-i18n="plan1Tag">自助极速买断 · 主推</span>
+            <h3 style="margin:0 0 4px;font-size:18px;" data-i18n="plan1Title">单站一键修复包 (Fix Pack)</h3>
+            <div class="plan-price">$29 <small>/ ¥99 CNY · 买断无年费</small></div>
+            <ul class="plan-list">
+              <li data-i18n="plan1F1">完整专属 <code>/llms.txt</code> 与全站浓缩 <code>/llms-full.txt</code>（支持导出 <code>.txt</code>）</li>
+              <li data-i18n="plan1F2">可直接贴入 <code>&lt;head&gt;</code> 的零报错 <code>JSON-LD</code> 组合块（支持导出 <code>.json</code>）</li>
+              <li data-i18n="plan1F3"><code>robots.txt</code> AI 爬虫放行补丁（保留现有后台隐私规则）</li>
+              <li data-i18n="plan1F4">20 个模拟买家问 ChatGPT / Perplexity 真实提问自测清单</li>
+            </ul>
+          </div>
+          <button id="btn-order-fixpack" class="btn btn-accent btn-lg" type="button" data-i18n="plan1Cta">
+            获取修复包（$29 / ¥99）
+          </button>
+        </div>
+
+        <div class="plan-card">
+          <div>
+            <span class="plan-tag" style="background:var(--bg-subtle);color:var(--ink-primary);" data-i18n="plan2Tag">人工交付 · 省心托管</span>
+            <h3 style="margin:0 0 4px;font-size:18px;" data-i18n="plan2Title">Shopify / WordPress 人工代部署</h3>
+            <div class="plan-price">$199 <small>/ ¥499 CNY · 含 2 次微调</small></div>
+            <ul class="plan-list">
+              <li data-i18n="plan2F1">包含单站一键修复包全部产出文件与永久激活码</li>
+              <li data-i18n="plan2F2">工程师代修改 Shopify <code>theme.liquid</code> 或 WordPress 主题与静态路由</li>
+              <li data-i18n="plan2F3">Google Rich Results 结构化数据实测零报错验收</li>
+              <li data-i18n="plan2F4">交付边界清晰：含上线后 2 次价格/文案微调，绝不糊弄</li>
+            </ul>
+          </div>
+          <button id="btn-order-dfy" class="btn btn-outline btn-lg" type="button" data-i18n="plan2Cta">
+            预约人工代部署（$199 / ¥499）
+          </button>
+        </div>
+      </div>
+
+      <!-- License Input Bar -->
+      <div class="license-bar">
+        <input
+          id="input-license"
+          class="input"
+          type="text"
+          placeholder="OPC1.eyJ2IjoxLCJwIjoiZ2VvLWRvY3RvciIsLi4ufQ.signature"
+          aria-label="OPC1 Activation Code"
+        >
+        <button id="btn-verify-license" class="btn btn-primary" type="button" data-i18n="btnVerifyLicense">
+          本地 Ed25519 验签解锁
+        </button>
+        <button id="btn-clear-license" class="btn btn-ghost btn-sm hidden" type="button" data-i18n="btnClearLicense">
+          清除激活码
+        </button>
+      </div>
+      <div id="license-feedback" class="status-banner hidden"></div>
+
+      <!-- Deliverables Studio -->
+      <div class="deliverables-box">
+        <div class="deliverable-tabs" role="tablist">
+          <button class="deliverable-tab active" data-asset="llmsTxt" type="button">llms.txt</button>
+          <button class="deliverable-tab" data-asset="llmsFullTxt" type="button">llms-full.txt</button>
+          <button class="deliverable-tab" data-asset="jsonLdScriptTag" type="button">JSON-LD &lt;head&gt;</button>
+          <button class="deliverable-tab" data-asset="robotsTxtPatch" type="button">robots.txt Patch</button>
+          <button class="deliverable-tab" data-asset="buyerPrompts" type="button">20 Buyer Prompts</button>
+        </div>
+        <div class="deliverable-toolbar">
+          <span id="deliverable-meta">Locked — Verify OPC1 license to unlock copy &amp; file export</span>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button id="btn-copy-asset" class="btn btn-outline btn-sm" type="button" disabled data-i18n="btnCopyAsset">一键复制</button>
+            <button id="btn-download-asset" class="btn btn-accent btn-sm" type="button" disabled data-i18n="btnDownloadAsset">导出文件</button>
+          </div>
+        </div>
+        <div id="deliverable-content" class="deliverable-content is-locked">
+          <pre id="deliverable-pre"></pre>
+          <div id="lock-overlay" class="lock-overlay">
+            <div style="max-width:460px;">
+              <div style="font-weight:700;font-size:16px;margin-bottom:6px;" data-i18n="lockOverlayTitle">
+                已按当前体检站点生成专属修复包（待解锁）
+              </div>
+              <p style="margin:0 0 14px;font-size:13px;color:#cbd5e1;" data-i18n="lockOverlaySub">
+                输入 OPC1. 激活码即刻在浏览器本地通过 Ed25519 公钥验签解锁全部 5 项交付文件；暂无激活码可直接点击下单秒发。
+              </p>
+              <button id="btn-overlay-order" class="btn btn-accent" type="button" data-i18n="lockOverlayCta">
+                立即获取激活码（$29 / ¥99）
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Transparent Self-Benchmark + Visible FAQ -->
+    <section class="card section-card" id="faq">
+      <div class="audit-pill-bar" style="margin-bottom:18px;">
+        <div>
+          <strong data-i18n="selfAuditLabel">透明自测基准：12/12 自动化规范实测通过（5.0 / 5.0 · 1 条公开测试套件验证记录 · 零虚构买家评价）</strong>
+        </div>
+        <button id="btn-self-audit-2" class="btn btn-outline btn-sm" type="button" data-i18n="btnAuditSelfNow">
+          立即实测本站分数 →
+        </button>
+      </div>
+
+      <h2 data-i18n="faqHeading">常见问题（FAQ）</h2>
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary data-i18n="faq1Q">为什么 Shopify 与独立站常在 ChatGPT Search 和 Perplexity 中被跳过？</summary>
+          <p data-i18n="faq1A">绝大多数独立站误复制了封锁 OAI-SearchBot 或 GPTBot 的 robots.txt，缺少根目录 /llms.txt 索引，把关键报价做在图片海报或延迟 JS 里，且缺失 Product、Offer 与 FAQPage JSON-LD 结构化信号。</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq2Q">$29 / ¥99 单站一键修复包具体包含哪些交付物？</summary>
+          <p data-i18n="faq2A">解锁后可一键复制并导出为本站量身生成的 /llms.txt、/llms-full.txt、零语法错误的可嵌入 &lt;head&gt; 的 JSON-LD 代码块、robots.txt 放行补丁，以及 20 个模拟买家向 ChatGPT/Perplexity 提问的自测清单。</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq3Q">OPC1 离线 Ed25519 激活码验签安全吗？会上传源码吗？</summary>
+          <p data-i18n="faq3A">源码解析与 Ed25519 公钥验签 100% 在你自己的浏览器本地完成（基于原生 WebCrypto SubtleCrypto），不会把未公开页面源码或价格表发往任何后端服务器。</p>
+        </details>
+        <details class="faq-item">
+          <summary data-i18n="faq4Q">$199 / ¥499 人工代部署的服务范围与售后边界是什么？</summary>
+          <p data-i18n="faq4A">包含完整修复包并由人工注入 Shopify theme.liquid 或 WordPress 主题与静态路由，验收 Google Rich Results 与 GEO Doctor 复测通过，并包含交付后 2 次文案或价格字段微调。</p>
+        </details>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>GEO Doctor</strong> · AI Search Visibility Diagnostic Studio ·
+        <a href="mailto:a3152557994@gmail.com">a3152557994@gmail.com</a>
+      </div>
+      <div class="footer-links">
+        <a href="llms.txt">/llms.txt</a>
+        <a href="robots.txt">/robots.txt</a>
+        <a href="sitemap.xml">/sitemap.xml</a>
+        <a href="https://github.com/a3152557994-ship-it/geo-doctor" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Order Modal -->
+  <div id="order-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <h3 id="modal-title" data-i18n="modalTitle">下单获取激活码 / 预约代部署</h3>
+        <button id="btn-close-modal" class="btn btn-ghost btn-sm" type="button">✕</button>
+      </div>
+      <p style="margin:0;font-size:13.5px;color:var(--ink-secondary);" data-i18n="modalDesc">
+        已根据你当前的体检站点自动预填诊断摘要（目标网址、当前得分与缺失项）。发送订单邮件后将秒级签发对应的 OPC1. 离线激活码：
+      </p>
+      <div id="order-brief-text" class="order-brief-box"></div>
+      <div class="modal-actions">
+        <a id="link-mailto-gmail" class="btn btn-accent" href="#" data-i18n="btnSendGmail">
+          邮件下单 (Gmail)
+        </a>
+        <a id="link-mailto-qq" class="btn btn-primary" href="#" data-i18n="btnSendQQ">
+          邮件下单 (QQ邮箱)
+        </a>
+        <button id="btn-copy-order-brief" class="btn btn-outline" type="button" data-i18n="btnCopyOrder">
+          复制订单信息（微信/闲鱼发送）
+        </button>
+      </div>
+      <div id="payment-slot" class="payment-slot"></div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

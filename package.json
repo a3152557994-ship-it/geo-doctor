@@ -1,0 +1,23 @@
+{
+  "name": "geo-doctor",
+  "version": "1.0.0",
+  "description": "AI Search / ChatGPT Visibility Diagnostic & One-Click llms.txt + JSON-LD Fix Pack Generator",
+  "type": "module",
+  "main": "./src/auditor.mjs",
+  "exports": {
+    ".": "./src/auditor.mjs"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "keywords": [
+    "geo",
+    "ai-seo",
+    "llms-txt",
+    "json-ld",
+    "chatgpt-seo",
+    "shopify",
+    "agent-readiness"
+  ],
+  "license": "MIT"
+}
