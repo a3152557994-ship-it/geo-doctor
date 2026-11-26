@@ -19,6 +19,7 @@ const PAYMENT_CONFIG = {
 };
 
 const STORAGE_LICENSE_KEY = "geo_doctor_opc1_token_v1";
+const GLOBAL_WILDCARD_KEY = "opc_global_license_v1";
 
 const I18N = {
   zh: {
@@ -71,11 +72,15 @@ const I18N = {
     selfAuditLabel: "透明自测基准：12/12 自动化规范实测通过（5.0 / 5.0 · 1 条公开测试套件验证记录 · 零虚构买家评价）",
     btnAuditSelfNow: "立即实测本站分数 →",
     faqHeading: "常见问题（FAQ）",
-    modalTitle: "下单获取激活码 / 预约代部署",
-    modalDesc: "已根据你当前的体检站点自动预填诊断摘要（目标网址、当前得分与缺失项）。发送订单邮件后将秒级签发对应的 OPC1. 离线激活码：",
-    btnSendGmail: "邮件下单 (Gmail)",
-    btnSendQQ: "邮件下单 (QQ邮箱)",
-    btnCopyOrder: "复制订单信息（微信/闲鱼发送）",
+    allAccessTitle: "🔥 OPC All-Access 全站 14 款工具通票：¥39 / $14.99 一次性买断",
+    allAccessDesc: "签发一枚 p=\"*\" 全通型 OPC1. 激活码，直接解锁本站 GEO Doctor 完整修复包 + 全站其余 13 款开发者与跨境效率工具！",
+    allAccessCta: "申领全站通票（¥39 / $14.99）",
+    modalTitle: "统一收银台 · 申领或当场验签 OPC1. 激活码",
+    modalStep1: "① 一键复制订单口令（含商品、价格、站点得分与专属单号）",
+    modalStep2: "② 客服快速通道（粘贴发送上方口令，秒发 OPC1. 激活码）",
+    modalStep3: "③ 已购 OPC1. 激活码？当场本地 Ed25519 验签秒解锁",
+    btnSendQQ: "✉️ 备用：邮件客户端",
+    btnCopyOrder: "📋 一键复制订单口令",
     probingText: "正在并发探测目标页、robots.txt、llms.txt 与 sitemap.xml（最多等待 8 秒）…",
     probeFailedPrefix: "在线抓取受阻（绝不伪造结果）：",
     probeFailedGuide: "Shopify / Cloudflare 站点常拦截浏览器跨域请求。点击下方按钮一键切换「模式 B」，粘贴源码即可 100% 精准体检！",
@@ -139,11 +144,15 @@ const I18N = {
     selfAuditLabel: "Transparent Self-Benchmark: 12/12 automated checks verified (5.0 / 5.0 · 1 open test-suite audit · zero fabricated reviews)",
     btnAuditSelfNow: "Test This Site Now →",
     faqHeading: "Frequently Asked Questions",
-    modalTitle: "Order Activation Code / Book Deployment",
-    modalDesc: "Your current site audit summary (target URL, score, and missing checks) is pre-filled below. Send the email order to receive your OPC1. offline license:",
-    btnSendGmail: "Order via Email (Gmail)",
-    btnSendQQ: "Order via Email (QQ Mail)",
-    btnCopyOrder: "Copy Order Brief",
+    allAccessTitle: "🔥 OPC All-Access Master Key (All 14 Tools): ¥39 / $14.99 One-Time",
+    allAccessDesc: "One p=\"*\" Ed25519 OPC1. key unlocks GEO Doctor Fix Pack + all 13 other web & CLI utilities on OPC Hub!",
+    allAccessCta: "Get Master Key (¥39 / $14.99)",
+    modalTitle: "Unified Checkout & Instant OPC1. License Unlock",
+    modalStep1: "① Copy Order Command (Product, Price, Score & Order ID)",
+    modalStep2: "② Fast Support Channel (QQ / WeChat: 3152557994)",
+    modalStep3: "③ Already Have an OPC1. Key? Verify & Unlock Locally",
+    btnSendQQ: "✉️ Fallback: Mail App",
+    btnCopyOrder: "📋 Copy Order Command",
     probingText: "Concurrently probing HTML, /robots.txt, /llms.txt, and /sitemap.xml (timeout 8s)...",
     probeFailedPrefix: "Live fetch blocked (never fabricated): ",
     probeFailedGuide: "Shopify / Cloudflare stores often block cross-origin browser requests. Switch to Mode B to paste HTML & robots.txt for 100% accurate offline analysis.",
@@ -468,93 +477,113 @@ async function runSelfAudit() {
 
 async function handleLicenseVerification(token, persist = true) {
   const feedback = $("license-feedback");
+  const modalFeedback = $("modal-license-feedback");
   const trimmed = String(token || "").trim();
+  const setBothFeedback = (cls, msg) => {
+    for (const el of [feedback, modalFeedback]) {
+      if (!el) continue;
+      el.className = cls;
+      el.textContent = msg;
+      el.classList.remove("hidden");
+    }
+  };
+
   if (!trimmed) {
-    feedback.className = "status-banner error";
-    feedback.textContent = state.lang === "zh" ? "请输入以 OPC1. 开头的激活码。" : "Please enter an OPC1. license code.";
-    feedback.classList.remove("hidden");
-    return;
+    setBothFeedback(
+      "status-banner error",
+      state.lang === "zh" ? "请输入以 OPC1. 开头的激活码。" : "Please enter an OPC1. license code."
+    );
+    return false;
   }
 
   const res = await verifyLicenseToken(trimmed, { expectedProduct: PRODUCT_SLUG });
   if (!res.valid) {
     state.license = { unlocked: false, payload: null, token: "" };
     if (persist) localStorage.removeItem(STORAGE_LICENSE_KEY);
-    feedback.className = "status-banner error";
-    feedback.textContent =
+    setBothFeedback(
+      "status-banner error",
       state.lang === "zh"
         ? `验签未通过 (${res.reason})：${res.message || "激活码无效"}`
-        : `Verification failed (${res.reason}): ${res.message || "Invalid license"}`;
-    feedback.classList.remove("hidden");
+        : `Verification failed (${res.reason}): ${res.message || "Invalid license"}`
+    );
     $("btn-clear-license").classList.add("hidden");
     renderDeliverableAsset();
-    return;
+    return false;
   }
 
   state.license = { unlocked: true, payload: res.payload, token: trimmed };
-  if (persist) localStorage.setItem(STORAGE_LICENSE_KEY, trimmed);
-  feedback.className = "status-banner info";
-  feedback.textContent =
+  $("input-license").value = trimmed;
+  if ($("modal-input-license")) $("modal-input-license").value = trimmed;
+  if (persist) {
+    try {
+      localStorage.setItem(STORAGE_LICENSE_KEY, trimmed);
+      if (res.payload?.p === "*") {
+        localStorage.setItem(GLOBAL_WILDCARD_KEY, trimmed);
+      }
+    } catch {}
+  }
+  setBothFeedback(
+    "status-banner info",
     state.lang === "zh"
-      ? `Ed25519 本地验签通过！已永久解锁全部 5 项修复交付件（授权邮箱：${res.payload.e || "Pro"}）。`
-      : `Ed25519 verified locally! All 5 deliverables unlocked for ${res.payload.e || "Pro"}.`;
-  feedback.classList.remove("hidden");
+      ? `✅ Ed25519 本地验签通过！已永久解锁全部 5 项修复交付件（授权：${res.payload.e || (res.payload.p === "*" ? "全站通票 *" : "Pro")}）。`
+      : `✅ Ed25519 verified locally! All 5 deliverables unlocked for ${res.payload.e || (res.payload.p === "*" ? "All-Access *" : "Pro")}.`
+  );
   $("btn-clear-license").classList.remove("hidden");
   renderDeliverableAsset();
+  return true;
 }
 
-function openOrderModal(plan) {
-  state.modalPlan = plan;
+let currentOrderStamp = "";
+function makeOrderStamp() {
+  const d = new Date();
+  const pad = (n) => String(n).padStart(2, "0");
+  return `GEO-${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
+}
+
+function refreshModalOrderBrief() {
+  const plan = state.modalPlan;
   const r = state.report;
-  const isDfy = plan === "dfy";
-  const planTitle = isDfy
-    ? "Shopify/WordPress Done-For-You ($199 USD / ¥499 CNY)"
-    : "GEO Doctor Single-Site Fix Pack ($29 USD / ¥99 CNY)";
+  document.querySelectorAll("[data-plan-choice]").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.planChoice === plan);
+  });
+
+  const planMeta =
+    plan === "dfy"
+      ? { title: "GEO Doctor Shopify/WordPress 人工代部署 (DFY)", price: "$199 USD / ¥499 CNY" }
+      : plan === "all-access"
+        ? { title: 'OPC All-Access 全站 14 款工具通票 (p="*")', price: "¥39 CNY / $14.99 USD" }
+        : { title: "GEO Doctor 单站一键修复包 (slug: geo-doctor)", price: "$29 USD / ¥99 CNY" };
 
   const failedTitles = r
     ? r.checks
         .filter((c) => c.status !== "pass")
+        .slice(0, 5)
         .map((c) => `- [#${c.index} ${c.status.toUpperCase()}] ${c.titleEn}`)
         .join("\n")
     : "- Full site audit pending";
 
   const brief = [
-    `[GEO Doctor Order Request]`,
-    `Plan: ${planTitle}`,
-    `Target URL: ${r?.extracted?.url || $("input-live-url").value || "N/A"}`,
-    `Brand: ${r?.extracted?.brandName || "N/A"}`,
-    `Current GEO Score: ${r ? `${r.score}/100 (${r.grade})` : "N/A"}`,
-    `Top Gaps Detected:`,
-    failedTitles || "- None (Benchmark verification)",
-    ``,
-    `Please reply with my OPC1. offline license code (for Fix Pack) or onboarding link (for Done-For-You).`,
-  ].join("\n");
+    `【OPC 订单口令】${currentOrderStamp}`,
+    `【选购方案】${planMeta.title}`,
+    `【订单价格】${planMeta.price}`,
+    `【体检站点】${r?.extracted?.url || $("input-live-url").value || "N/A"} (${r ? `${r.score}/100 ${r.grade}` : "N/A"})`,
+    failedTitles ? `【待修复项】\n${failedTitles}` : null,
+    `【发货请求】请签发对应 OPC1. 离线激活码`,
+  ]
+    .filter(Boolean)
+    .join("\n");
 
   $("order-brief-text").textContent = brief;
 
-  const subject = encodeURIComponent(`[GEO Doctor] ${planTitle} — ${r?.extracted?.brandName || "Site Order"}`);
+  const subject = encodeURIComponent(`[OPC 订单 ${currentOrderStamp}] ${planMeta.title} (${planMeta.price})`);
   const body = encodeURIComponent(brief);
-  $("link-mailto-gmail").href = `mailto:${PAYMENT_CONFIG.emailPrimary}?subject=${subject}&body=${body}`;
-  $("link-mailto-qq").href = `mailto:${PAYMENT_CONFIG.emailSecondary}?subject=${subject}&body=${body}`;
+  $("link-mailto-qq").href = `mailto:${PAYMENT_CONFIG.emailSecondary}?cc=${PAYMENT_CONFIG.emailPrimary}&subject=${subject}&body=${body}`;
+}
 
-  const slot = $("payment-slot");
-  const stripeUrl = isDfy ? PAYMENT_CONFIG.stripeDfyUrl : PAYMENT_CONFIG.stripeFixPackUrl;
-  const parts = [];
-  if (stripeUrl) {
-    parts.push(`<a class="btn btn-accent btn-sm" href="${escapeHtml(stripeUrl)}" target="_blank" rel="noopener">Stripe Checkout →</a>`);
-  }
-  if (PAYMENT_CONFIG.qrCodeImageUrl) {
-    parts.push(`<div style="margin-top:8px;"><img src="${escapeHtml(PAYMENT_CONFIG.qrCodeImageUrl)}" alt="Payment QR" style="max-width:180px;border-radius:8px;"></div>`);
-  }
-  if (parts.length === 0) {
-    parts.push(
-      state.lang === "zh"
-        ? `直达发码通道：发送上述订单邮件至 <strong>${PAYMENT_CONFIG.emailPrimary}</strong> 或 <strong>${PAYMENT_CONFIG.emailSecondary}</strong>，核实后秒发 <code>OPC1.</code> 激活码。（已预留 Stripe 链接与收款码配置位）`
-        : `Direct fulfillment: Send the pre-filled email above to <strong>${PAYMENT_CONFIG.emailPrimary}</strong> or <strong>${PAYMENT_CONFIG.emailSecondary}</strong> to receive your <code>OPC1.</code> license key. (Stripe/QR slot ready)`
-    );
-  }
-  slot.innerHTML = parts.join(" ");
-
+function openOrderModal(plan = "all-access") {
+  state.modalPlan = plan;
+  currentOrderStamp = makeOrderStamp();
+  refreshModalOrderBrief();
   $("order-modal").classList.remove("hidden");
 }
 
@@ -662,12 +691,29 @@ function initEvents() {
   $("btn-order-fixpack").addEventListener("click", () => openOrderModal("fix-pack"));
   $("btn-overlay-order").addEventListener("click", () => openOrderModal("fix-pack"));
   $("btn-order-dfy").addEventListener("click", () => openOrderModal("dfy"));
+  $("btn-order-allaccess")?.addEventListener("click", () => openOrderModal("all-access"));
+  $("btn-footer-support")?.addEventListener("click", () => openOrderModal("all-access"));
+  document.querySelectorAll("[data-plan-choice]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      state.modalPlan = btn.dataset.planChoice;
+      refreshModalOrderBrief();
+    });
+  });
   $("btn-close-modal").addEventListener("click", () => $("order-modal").classList.add("hidden"));
   $("order-modal").addEventListener("click", (e) => {
     if (e.target === $("order-modal")) $("order-modal").classList.add("hidden");
   });
   $("btn-copy-order-brief").addEventListener("click", (e) => {
     copyText($("order-brief-text").textContent, e.currentTarget);
+  });
+  $("btn-copy-qq-num")?.addEventListener("click", (e) => copyText("3152557994", e.currentTarget));
+  $("btn-copy-qq-mail")?.addEventListener("click", (e) => copyText(PAYMENT_CONFIG.emailSecondary, e.currentTarget));
+  $("btn-copy-gmail-addr")?.addEventListener("click", (e) => copyText(PAYMENT_CONFIG.emailPrimary, e.currentTarget));
+  $("btn-modal-verify")?.addEventListener("click", async () => {
+    const ok = await handleLicenseVerification($("modal-input-license").value, true);
+    if (ok) {
+      setTimeout(() => $("order-modal").classList.add("hidden"), 900);
+    }
   });
 
   $("btn-self-audit").addEventListener("click", () => {
@@ -685,7 +731,7 @@ async function bootstrap() {
   initEvents();
   applyLanguage();
 
-  const savedToken = localStorage.getItem(STORAGE_LICENSE_KEY);
+  const savedToken = localStorage.getItem(STORAGE_LICENSE_KEY) || localStorage.getItem(GLOBAL_WILDCARD_KEY);
   if (savedToken) {
     $("input-license").value = savedToken;
     await handleLicenseVerification(savedToken, false);

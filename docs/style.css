@@ -920,14 +920,91 @@ a:hover {
 
 .modal-panel {
   width: 100%;
-  max-width: 580px;
+  max-width: 620px;
   background: var(--bg-card);
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
   box-shadow: var(--shadow-modal);
-  padding: 24px;
+  padding: 22px;
   max-height: 92vh;
   overflow-y: auto;
+}
+
+.all-access-strip {
+  margin-top: 14px;
+  padding: 14px 18px;
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+  border: 1px solid #bfdbfe;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-plan-pills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.modal-plan-pill {
+  text-align: left;
+  padding: 9px 10px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border);
+  background: #fdfcfa;
+  cursor: pointer;
+}
+
+.modal-plan-pill.active {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.modal-plan-pill strong {
+  display: block;
+  font-size: 12.5px;
+  color: var(--ink-primary);
+  margin-bottom: 2px;
+}
+
+.modal-plan-pill span {
+  font-size: 11.5px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.modal-step-card {
+  border: 1px solid var(--border);
+  background: #fdfcfa;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+
+.modal-step-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-primary);
+  margin-bottom: 6px;
+}
+
+.support-highlight {
+  font-size: 13px;
+  color: var(--ink-primary);
+  background: var(--green-bg);
+  border: 1px solid #bce4d2;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 680px) {
+  .modal-plan-pills {
+    grid-template-columns: 1fr;
+  }
 }
 
 .modal-head {

@@ -378,6 +378,18 @@
         </div>
       </div>
 
+      <div class="all-access-strip">
+        <div>
+          <strong data-i18n="allAccessTitle">🔥 OPC All-Access 全站 14 款工具通票：¥39 / $14.99 一次性买断</strong>
+          <div style="font-size:13px;color:var(--ink-secondary);margin-top:2px;" data-i18n="allAccessDesc">
+            签发一枚 p="*" 全通型 OPC1. 激活码，直接解锁本站 GEO Doctor 完整修复包 + 全站其余 13 款开发者与跨境效率工具！
+          </div>
+        </div>
+        <button id="btn-order-allaccess" class="btn btn-primary" type="button" data-i18n="allAccessCta">
+          申领全站通票（¥39 / $14.99）
+        </button>
+      </div>
+
       <!-- License Input Bar -->
       <div class="license-bar">
         <input
@@ -468,40 +480,83 @@
     <div class="container footer-inner">
       <div>
         <strong>GEO Doctor</strong> · AI Search Visibility Diagnostic Studio ·
-        <a href="mailto:a3152557994@gmail.com">a3152557994@gmail.com</a>
+        客服 QQ/微信：<code>3152557994</code> ·
+        <button id="btn-footer-support" type="button" class="btn btn-ghost btn-sm" style="padding:2px 8px;font-size:12px;">获取激活码 / 联系客服</button>
       </div>
       <div class="footer-links">
         <a href="llms.txt">/llms.txt</a>
         <a href="robots.txt">/robots.txt</a>
         <a href="sitemap.xml">/sitemap.xml</a>
+        <a href="https://a3152557994-ship-it.github.io/opc-tools/" target="_blank" rel="noopener">OPC Hub</a>
         <a href="https://github.com/a3152557994-ship-it/geo-doctor" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </footer>
 
-  <!-- Order Modal -->
+  <!-- Unified Checkout & Instant Ed25519 Unlock Modal -->
   <div id="order-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div class="modal-panel">
       <div class="modal-head">
-        <h3 id="modal-title" data-i18n="modalTitle">下单获取激活码 / 预约代部署</h3>
+        <h3 id="modal-title" data-i18n="modalTitle">统一收银台 · 申领或当场验签 OPC1. 激活码</h3>
         <button id="btn-close-modal" class="btn btn-ghost btn-sm" type="button">✕</button>
       </div>
-      <p style="margin:0;font-size:13.5px;color:var(--ink-secondary);" data-i18n="modalDesc">
-        已根据你当前的体检站点自动预填诊断摘要（目标网址、当前得分与缺失项）。发送订单邮件后将秒级签发对应的 OPC1. 离线激活码：
-      </p>
-      <div id="order-brief-text" class="order-brief-box"></div>
-      <div class="modal-actions">
-        <a id="link-mailto-gmail" class="btn btn-accent" href="#" data-i18n="btnSendGmail">
-          邮件下单 (Gmail)
-        </a>
-        <a id="link-mailto-qq" class="btn btn-primary" href="#" data-i18n="btnSendQQ">
-          邮件下单 (QQ邮箱)
-        </a>
-        <button id="btn-copy-order-brief" class="btn btn-outline" type="button" data-i18n="btnCopyOrder">
-          复制订单信息（微信/闲鱼发送）
+
+      <div class="modal-plan-pills" id="modal-plan-pills">
+        <button type="button" class="modal-plan-pill active" data-plan-choice="all-access">
+          <strong>🔥 All-Access 全站通票 (p="*")</strong>
+          <span>¥39 / $14.99（含本站+全站14款）</span>
+        </button>
+        <button type="button" class="modal-plan-pill" data-plan-choice="fix-pack">
+          <strong>单站一键修复包 (geo-doctor)</strong>
+          <span>$29 / ¥99 永久买断</span>
+        </button>
+        <button type="button" class="modal-plan-pill" data-plan-choice="dfy">
+          <strong>Shopify/WP 人工代部署</strong>
+          <span>$199 / ¥499 省心托管</span>
         </button>
       </div>
-      <div id="payment-slot" class="payment-slot"></div>
+
+      <div class="modal-step-card">
+        <div class="modal-step-label" data-i18n="modalStep1">① 一键复制订单口令（含商品、价格、站点得分与专属单号）</div>
+        <div id="order-brief-text" class="order-brief-box"></div>
+        <button id="btn-copy-order-brief" class="btn btn-accent" style="width:100%;" type="button" data-i18n="btnCopyOrder">
+          📋 一键复制订单口令
+        </button>
+      </div>
+
+      <div class="modal-step-card">
+        <div class="modal-step-label" data-i18n="modalStep2">② 客服快速通道（粘贴发送上方口令，秒发 OPC1. 激活码）</div>
+        <div class="support-highlight">
+          客服 QQ / 微信同号：<strong>3152557994</strong> ｜ 接单邮箱：<code>3152557994@qq.com</code> / <code>a3152557994@gmail.com</code>
+        </div>
+        <div class="modal-actions" style="margin-top:8px;">
+          <button id="btn-copy-qq-num" class="btn btn-outline btn-sm" type="button">复制客服号 3152557994</button>
+          <button id="btn-copy-qq-mail" class="btn btn-outline btn-sm" type="button">复制 QQ 邮箱</button>
+          <button id="btn-copy-gmail-addr" class="btn btn-outline btn-sm" type="button">复制 Gmail</button>
+          <a id="link-mailto-qq" class="btn btn-ghost btn-sm" href="mailto:3152557994@qq.com?cc=a3152557994@gmail.com&subject=%5BGEO%20Doctor%5D%20Order" data-i18n="btnSendQQ">
+            ✉️ 备用：邮件客户端
+          </a>
+        </div>
+        <div id="payment-slot" class="payment-slot" style="display:none;"></div>
+      </div>
+
+      <div class="modal-step-card" style="margin-bottom:0;">
+        <div class="modal-step-label" data-i18n="modalStep3">③ 已购 OPC1. 激活码？当场本地 Ed25519 验签秒解锁</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
+          <input
+            id="modal-input-license"
+            class="input"
+            style="flex:1 1 240px;font-family:var(--font-mono);font-size:12.5px;"
+            type="text"
+            placeholder="粘贴 OPC1.xxxx.yyyy 激活码（支持 geo-doctor 或 p=&quot;*&quot; 全通码）"
+            autocomplete="off"
+          >
+          <button id="btn-modal-verify" class="btn btn-primary" type="button" data-i18n="btnVerifyLicense">
+            本地 Ed25519 验签解锁
+          </button>
+        </div>
+        <div id="modal-license-feedback" class="status-banner hidden" style="margin-top:8px;"></div>
+      </div>
     </div>
   </div>
 

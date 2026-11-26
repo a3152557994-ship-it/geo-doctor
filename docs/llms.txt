@@ -24,7 +24,9 @@
 ## Pricing & Licensing
 - Free Tier ($0): Unlimited 12-point diagnostics (Live URL + Offline HTML Mode) + free 10-line custom /llms.txt preview
 - Single-Site Fix Pack ($29 USD / ¥99 CNY one-time): Unlocks full /llms.txt, /llms-full.txt, zero-error <head> JSON-LD, robots.txt patch, and 20 tailored buyer-intent prompts via offline Ed25519 OPC1 license key
+- OPC All-Access Master Key (¥39 CNY / $14.99 USD one-time, `p="*"`): Unlocks GEO Doctor Fix Pack plus all 14 web/CLI micro-tools on OPC Hub
 - Done-For-You Deployment ($199 USD / ¥499 CNY): Manual Shopify theme.liquid or WordPress head injection, rich-results check, and 2 post-delivery revisions
+- Support & Instant Fulfillment: QQ / WeChat `3152557994` | `3152557994@qq.com` / `a3152557994@gmail.com`
 
 ## Links & Endpoints
 - [GEO Doctor Diagnostic Studio](https://a3152557994-ship-it.github.io/geo-doctor/): Live dual-mode GEO visibility auditor
