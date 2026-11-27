@@ -1,36 +1,24 @@
 import {
-  PRODUCT_SLUG,
   SAMPLES,
   auditSite,
   probeLiveUrl,
-  verifyLicenseToken,
 } from "./auditor.js";
 
-/**
- * Reserved payment integration slots.
- * Populate Stripe Payment Links or local QR image paths (e.g. "assets/pay-qr.png") anytime.
- */
-const PAYMENT_CONFIG = {
+const STUDIO_CONTACT = {
   emailPrimary: "a3152557994@gmail.com",
   emailSecondary: "3152557994@qq.com",
-  stripeFixPackUrl: "",
-  stripeDfyUrl: "",
-  qrCodeImageUrl: "",
 };
-
-const STORAGE_LICENSE_KEY = "geo_doctor_opc1_token_v1";
-const GLOBAL_WILDCARD_KEY = "opc_global_license_v1";
 
 const I18N = {
   zh: {
     navSelfAudit: "自检本站标杆 (100分)",
-    navUnlock: "激活码解锁",
-    heroBadge: "12 项 ChatGPT / Perplexity / Claude 推荐度硬核体检 · 纯前端本地验签",
+    navUnlock: "免费导出修复包 / 代部署",
+    heroBadge: "12 项 ChatGPT / Perplexity / Claude 推荐度硬核体检 · 全套修复包 100% 免费免码导出",
     heroTitle: 'AI 时代客户先问 ChatGPT：<br>你的独立站会被<span class="hero-serif">直接推荐</span>，还是当场隐身？',
-    heroLead: "3 秒排查 OAI-SearchBot 放行、/llms.txt 与 Product + Offer + FAQPage JSON-LD 缺失。免费查看 0–100 体检报告与专属 llms.txt 前 10 行预览；一键修复包低至 $29 / ¥99 立即买断。",
-    heroPricingPill: "修复包 $29 / ¥99 · 人工代部署 $199 / ¥499",
+    heroLead: "3 秒排查 OAI-SearchBot 放行、/llms.txt 与 Product + Offer + FAQPage JSON-LD 缺失。0–100 体检报告与全套 5 项一键修复包现已 $0 / ¥0 免费全量开放；嫌改代码麻烦可预约 $199 / ¥499 工程师人工代部署。",
+    heroPricingPill: "自助修复包 $0 免费全开 · 人工代部署 $199 / ¥499",
     heroZeroLeak: "源码仅在本地浏览器解析 · 绝不上传商业隐私",
-    heroBuyLink: "查看修复包清单 →",
+    heroBuyLink: "免费导出修复包 →",
     modeATab: "模式 A：在线 URL 并发探测",
     modeBTab: "模式 B：粘贴源码精确体检（抗跨域防拦截）",
     btnRunUrl: "立即体检 URL",
@@ -45,42 +33,30 @@ const I18N = {
     statPass: "绿灯通过",
     statWarn: "黄灯待优",
     statFail: "红灯阻断",
-    ctaGenerateFix: "生成专属修复包 ($29 / ¥99)",
+    ctaGenerateFix: "免费复制/导出专属修复包 ($0)",
     checksHeading: "12 项 AI 推荐度诊断明细",
     filterAll: "全部 (12)",
     filterFail: "红灯阻断",
     filterWarn: "黄灯提醒",
     filterPass: "已通过",
-    previewHeading: "免费赠送：已为当前站点动态生成 /llms.txt 前 10 行真实预览",
-    previewSub: "已自动提取站点名称、产品类型、明文定价与卖点层级；完整 /llms.txt、llms-full.txt、JSON-LD 与 20 个买家自测提问可在下方一键解锁。",
-    btnCopyPreview: "复制前 10 行预览",
-    pricingHeading: "一键修复包与高客单代部署方案",
-    pricingSub: "一次性买断，无按月订阅割韭菜。修复完立刻用上方诊断台复测验证分数飙升。",
-    plan1Tag: "自助极速买断 · 主推",
-    plan1Title: "单站一键修复包 (Fix Pack)",
-    plan1Cta: "获取修复包（$29 / ¥99）",
-    plan2Tag: "人工交付 · 省心托管",
+    previewHeading: "专属 /llms.txt 核心摘要速览（下方已免费解锁全套 5 项文件）",
+    previewSub: "已自动提取站点名称、产品类型、明文定价与卖点层级；完整 /llms.txt、llms-full.txt、JSON-LD 与 20 个买家自测提问可在下方直接免费导出。",
+    btnCopyPreview: "复制摘要",
+    pricingHeading: "全套 5 项修复包 $0 免费开放 · 另供工程师人工代部署",
+    pricingSub: "不设收费墙拦人：自助修复包 100% 免费免码导出；如需工程师代改 Shopify / WordPress 主题并验收结构化数据，可预约人工代部署。",
+    plan1Tag: "100% 免费开放 · 免注册免激活码",
+    plan1Title: "自助单站一键修复包 (Fix Pack)",
+    plan1Cta: "向上滚动免费导出（$0）",
+    plan2Tag: "数创引擎工作室 · 省心托管",
     plan2Title: "Shopify / WordPress 人工代部署",
     plan2Cta: "预约人工代部署（$199 / ¥499）",
-    btnVerifyLicense: "本地 Ed25519 验签解锁",
-    btnClearLicense: "清除激活码",
     btnCopyAsset: "一键复制",
-    btnDownloadAsset: "导出文件",
-    lockOverlayTitle: "已按当前体检站点生成专属修复包（待解锁）",
-    lockOverlaySub: "输入 OPC1. 激活码即刻在浏览器本地通过 Ed25519 公钥验签解锁全部 5 项交付文件；暂无激活码可直接点击下单秒发。",
-    lockOverlayCta: "立即获取激活码（$29 / ¥99）",
+    btnDownloadAsset: "免费导出文件",
     selfAuditLabel: "透明自测基准：12/12 自动化规范实测通过（5.0 / 5.0 · 1 条公开测试套件验证记录 · 零虚构买家评价）",
     btnAuditSelfNow: "立即实测本站分数 →",
     faqHeading: "常见问题（FAQ）",
-    allAccessTitle: "🔥 OPC All-Access 全站 14 款工具通票：¥39 / $14.99 一次性买断",
-    allAccessDesc: "签发一枚 p=\"*\" 全通型 OPC1. 激活码，直接解锁本站 GEO Doctor 完整修复包 + 全站其余 13 款开发者与跨境效率工具！",
-    allAccessCta: "申领全站通票（¥39 / $14.99）",
-    modalTitle: "统一收银台 · 申领或当场验签 OPC1. 激活码",
-    modalStep1: "① 一键复制订单口令（含商品、价格、站点得分与专属单号）",
-    modalStep2: "② 客服快速通道（粘贴发送上方口令，秒发 OPC1. 激活码）",
-    modalStep3: "③ 已购 OPC1. 激活码？当场本地 Ed25519 验签秒解锁",
-    btnSendQQ: "✉️ 备用：邮件客户端",
-    btnCopyOrder: "📋 一键复制订单口令",
+    allAccessTitle: "🎉 全站 18 款效率与防封微工具 100% 免费开放 · 离线百宝箱 & 严选基础设施",
+    allAccessDesc: "前往 OPC 免费总站一键转存离线工具百宝箱，或查阅 AWS Bedrock / 静态住宅网络合规防封指南与开源赞赏通道。",
     probingText: "正在并发探测目标页、robots.txt、llms.txt 与 sitemap.xml（最多等待 8 秒）…",
     probeFailedPrefix: "在线抓取受阻（绝不伪造结果）：",
     probeFailedGuide: "Shopify / Cloudflare 站点常拦截浏览器跨域请求。点击下方按钮一键切换「模式 B」，粘贴源码即可 100% 精准体检！",
@@ -90,19 +66,18 @@ const I18N = {
     warnLabel: "待优",
     failLabel: "阻断",
     fixPrefix: "修复建议：",
-    projectionFmt: (curr, proj) => `当前 AI 推荐准备度：<strong>${curr}/100</strong> → 部署 Fix Pack 后预计可达 <strong>${proj}/100</strong>`,
-    unlockedMeta: (email, plan) => `已通过 Ed25519 本地验签解锁 · 授权对象: ${email || "Verified"} (${plan || "pro"})`,
-    lockedMeta: "已锁定 — 输入 OPC1. 激活码本地验签后解锁复制与文件导出",
+    projectionFmt: (curr, proj) => `当前 AI 推荐准备度：<strong>${curr}/100</strong> → 部署免费 Fix Pack 后预计可达 <strong>${proj}/100</strong>`,
+    unlockedMeta: "✓ 100% 免费免码全解锁 — 可直接一键复制或导出文件",
   },
   en: {
     navSelfAudit: "Self-Audit This Page (100/100)",
-    navUnlock: "License Unlock",
-    heroBadge: "12-Point ChatGPT / Perplexity / Claude Readiness Audit · Local Ed25519 Unlock",
+    navUnlock: "Free Fix Pack & DFY",
+    heroBadge: "12-Point ChatGPT / Perplexity / Claude Readiness Audit · 100% Free Unlocked Fix Pack",
     heroTitle: 'Buyers Ask ChatGPT First:<br>Will AI <span class="hero-serif">Recommend</span> Your Store or Skip It?',
-    heroLead: "Check OAI-SearchBot access, /llms.txt, and Product + Offer + FAQPage JSON-LD in 3 seconds. Inspect your 0–100 score and custom 10-line llms.txt preview free; unlock the full Fix Pack for $29 / ¥99.",
-    heroPricingPill: "Fix Pack $29 / ¥99 · Done-For-You $199 / ¥499",
+    heroLead: "Check OAI-SearchBot access, /llms.txt, and Product + Offer + FAQPage JSON-LD in 3 seconds. Export all 5 Fix Pack files for $0 Free, or book $199 / ¥499 Done-For-You deployment.",
+    heroPricingPill: "Self-Serve Fix Pack $0 Free · Done-For-You $199 / ¥499",
     heroZeroLeak: "100% client-side HTML parsing · Zero source upload",
-    heroBuyLink: "View Fix Pack →",
+    heroBuyLink: "Export Free Fix Pack →",
     modeATab: "Mode A: Live URL Concurrent Probe",
     modeBTab: "Mode B: Paste Source (100% Offline Precision)",
     btnRunUrl: "Audit Live URL",
@@ -117,54 +92,41 @@ const I18N = {
     statPass: "Passed",
     statWarn: "Warnings",
     statFail: "Blocked",
-    ctaGenerateFix: "Unlock Fix Pack ($29 / ¥99)",
+    ctaGenerateFix: "Export Free Fix Pack ($0)",
     checksHeading: "12-Point AI Search Diagnostic Breakdown",
     filterAll: "All (12)",
     filterFail: "Red Fails",
     filterWarn: "Warnings",
     filterPass: "Passed",
-    previewHeading: "Free Preview: First 10 Lines of Your Tailored /llms.txt",
-    previewSub: "Auto-extracted from your site title, entity type, plaintext pricing, and headings. Unlock the full /llms.txt, llms-full.txt, JSON-LD, and 20 buyer prompts below.",
-    btnCopyPreview: "Copy 10-Line Preview",
-    pricingHeading: "One-Click Fix Pack & Done-For-You Deployment",
-    pricingSub: "One-time purchase, zero recurring SaaS tax. Re-run the diagnostic above after deploying to verify your score jump.",
-    plan1Tag: "Self-Serve · Best Value",
+    previewHeading: "Tailored /llms.txt Summary (Full 5-File Fix Pack Unlocked Free Below)",
+    previewSub: "Auto-extracted from your site title, entity type, plaintext pricing, and headings.",
+    btnCopyPreview: "Copy Summary",
+    pricingHeading: "100% Free Self-Serve Fix Pack & Optional Done-For-You Deployment",
+    pricingSub: "Zero paywalls on the software — export all 5 files free, or book an engineer to deploy into Shopify / WordPress.",
+    plan1Tag: "100% Free · No Login · No Keys",
     plan1Title: "Single-Site Fix Pack",
-    plan1Cta: "Get Fix Pack ($29 / ¥99)",
+    plan1Cta: "Scroll Up to Export Free ($0)",
     plan2Tag: "Managed Service",
     plan2Title: "Shopify / WordPress Done-For-You",
     plan2Cta: "Book Done-For-You ($199 / ¥499)",
-    btnVerifyLicense: "Verify Ed25519 & Unlock",
-    btnClearLicense: "Clear Key",
     btnCopyAsset: "Copy Code",
     btnDownloadAsset: "Download File",
-    lockOverlayTitle: "Your Site-Specific Fix Pack Is Ready (Locked)",
-    lockOverlaySub: "Paste an OPC1. license code for instant browser-local Ed25519 verification, or click below to order and receive your code.",
-    lockOverlayCta: "Get License Code ($29 / ¥99)",
     selfAuditLabel: "Transparent Self-Benchmark: 12/12 automated checks verified (5.0 / 5.0 · 1 open test-suite audit · zero fabricated reviews)",
     btnAuditSelfNow: "Test This Site Now →",
     faqHeading: "Frequently Asked Questions",
-    allAccessTitle: "🔥 OPC All-Access Master Key (All 14 Tools): ¥39 / $14.99 One-Time",
-    allAccessDesc: "One p=\"*\" Ed25519 OPC1. key unlocks GEO Doctor Fix Pack + all 13 other web & CLI utilities on OPC Hub!",
-    allAccessCta: "Get Master Key (¥39 / $14.99)",
-    modalTitle: "Unified Checkout & Instant OPC1. License Unlock",
-    modalStep1: "① Copy Order Command (Product, Price, Score & Order ID)",
-    modalStep2: "② Fast Support Channel (QQ / WeChat: 3152557994)",
-    modalStep3: "③ Already Have an OPC1. Key? Verify & Unlock Locally",
-    btnSendQQ: "✉️ Fallback: Mail App",
-    btnCopyOrder: "📋 Copy Order Command",
+    allAccessTitle: "🎉 All 18 OPC Micro-Tools Are 100% Free · Offline Bundle & Cloud Guides",
+    allAccessDesc: "Grab the offline toolkit bundle on OPC Hub or explore compliant cloud & residential ISP guides.",
     probingText: "Concurrently probing HTML, /robots.txt, /llms.txt, and /sitemap.xml (timeout 8s)...",
     probeFailedPrefix: "Live fetch blocked (never fabricated): ",
-    probeFailedGuide: "Shopify / Cloudflare stores often block cross-origin browser requests. Switch to Mode B to paste HTML & robots.txt for 100% accurate offline analysis.",
+    probeFailedGuide: "Switch to Mode B to paste HTML & robots.txt for 100% accurate offline analysis.",
     switchToModeB: "Switch to Mode B (Paste Source)",
     copiedText: "Copied!",
     passLabel: "PASS",
     warnLabel: "WARN",
     failLabel: "FAIL",
     fixPrefix: "Fix: ",
-    projectionFmt: (curr, proj) => `Current AI Readiness: <strong>${curr}/100</strong> → Projected after Fix Pack: <strong>${proj}/100</strong>`,
-    unlockedMeta: (email, plan) => `Unlocked locally via Ed25519 · Licensed to: ${email || "Verified"} (${plan || "pro"})`,
-    lockedMeta: "Locked — Verify OPC1 license locally to unlock copy & file download",
+    projectionFmt: (curr, proj) => `Current AI Readiness: <strong>${curr}/100</strong> → Projected after Free Fix Pack: <strong>${proj}/100</strong>`,
+    unlockedMeta: "✓ 100% Free & Unlocked — Copy or download any deliverable directly",
   },
 };
 
@@ -174,8 +136,7 @@ const state = {
   filter: "all",
   activeAsset: "llmsTxt",
   report: null,
-  license: { unlocked: false, payload: null, token: "" },
-  modalPlan: "fix-pack",
+  unlocked: true,
 };
 
 const $ = (id) => document.getElementById(id);
@@ -219,7 +180,6 @@ function applyLanguage() {
     if (dict[key]) el.innerHTML = dict[key];
   });
 
-  // Update sample buttons
   document.querySelectorAll(".sample-btn").forEach((btn) => {
     const sample = SAMPLES[btn.dataset.sample];
     if (sample) {
@@ -247,7 +207,6 @@ function renderReport() {
   if (!r) return;
   const dict = I18N[state.lang];
 
-  // Ring math (r=66 -> circumference = 2 * pi * 66 = 414.69)
   const circ = 414.69;
   const offset = circ - (circ * r.score) / 100;
   const ring = $("score-ring-arc");
@@ -277,7 +236,6 @@ function renderReport() {
   $("count-fail").textContent = String(r.preview.failCount);
   $("projection-box").innerHTML = dict.projectionFmt(r.score, r.preview.projectedScore);
 
-  // 12 Checks list
   const listEl = $("check-list");
   listEl.innerHTML = "";
   const filtered = r.checks.filter((c) => state.filter === "all" || c.status === state.filter);
@@ -305,10 +263,7 @@ function renderReport() {
     listEl.appendChild(item);
   }
 
-  // Free 10-line preview
   $("llms-preview-code").textContent = r.preview.llmsPreview10;
-
-  // Deliverables box
   renderDeliverableAsset();
 }
 
@@ -339,32 +294,8 @@ function getAssetPayload(assetKey) {
 function renderDeliverableAsset() {
   const dict = I18N[state.lang];
   const { text } = getAssetPayload(state.activeAsset);
-  const unlocked = state.license.unlocked;
-
-  const contentEl = $("deliverable-content");
-  const overlayEl = $("lock-overlay");
-  const copyBtn = $("btn-copy-asset");
-  const dlBtn = $("btn-download-asset");
-  const metaEl = $("deliverable-meta");
-
-  contentEl.classList.toggle("is-locked", !unlocked);
-  overlayEl.classList.toggle("hidden", unlocked);
-  copyBtn.disabled = !unlocked;
-  dlBtn.disabled = !unlocked;
-
-  if (unlocked) {
-    $("deliverable-pre").textContent = text;
-    metaEl.textContent = dict.unlockedMeta(state.license.payload?.e, state.license.payload?.plan);
-  } else {
-    // Show masked/abbreviated preview behind blur so zero paid payload leaks in plain readable form
-    const previewStub = text
-      .split("\n")
-      .slice(0, 12)
-      .map((line, i) => (i < 2 ? line : line.replace(/[A-Za-z0-9\u4e00-\u9fa5]/g, "•")))
-      .join("\n");
-    $("deliverable-pre").textContent = previewStub;
-    metaEl.textContent = dict.lockedMeta;
-  }
+  $("deliverable-pre").textContent = text;
+  $("deliverable-meta").textContent = dict.unlockedMeta;
 }
 
 async function copyText(text, btn) {
@@ -438,7 +369,6 @@ async function runLiveAudit(targetUrl) {
 async function runSelfAudit() {
   const canonicalHome = "https://a3152557994-ship-it.github.io/geo-doctor/";
   try {
-    // On HTTP(S) (localhost dev or GitHub Pages), fetch the exact deployed sibling files
     if (window.location.protocol.startsWith("http")) {
       const [htmlRes, robotsRes, llmsRes, sitemapRes] = await Promise.all([
         fetch("./index.html"),
@@ -461,9 +391,7 @@ async function runSelfAudit() {
         return;
       }
     }
-  } catch {
-    // Fallback to live probe or DOM snapshot
-  }
+  } catch {}
 
   state.report = auditSite({
     url: canonicalHome,
@@ -475,85 +403,8 @@ async function runSelfAudit() {
   renderReport();
 }
 
-async function handleLicenseVerification(token, persist = true) {
-  const feedback = $("license-feedback");
-  const modalFeedback = $("modal-license-feedback");
-  const trimmed = String(token || "").trim();
-  const setBothFeedback = (cls, msg) => {
-    for (const el of [feedback, modalFeedback]) {
-      if (!el) continue;
-      el.className = cls;
-      el.textContent = msg;
-      el.classList.remove("hidden");
-    }
-  };
-
-  if (!trimmed) {
-    setBothFeedback(
-      "status-banner error",
-      state.lang === "zh" ? "请输入以 OPC1. 开头的激活码。" : "Please enter an OPC1. license code."
-    );
-    return false;
-  }
-
-  const res = await verifyLicenseToken(trimmed, { expectedProduct: PRODUCT_SLUG });
-  if (!res.valid) {
-    state.license = { unlocked: false, payload: null, token: "" };
-    if (persist) localStorage.removeItem(STORAGE_LICENSE_KEY);
-    setBothFeedback(
-      "status-banner error",
-      state.lang === "zh"
-        ? `验签未通过 (${res.reason})：${res.message || "激活码无效"}`
-        : `Verification failed (${res.reason}): ${res.message || "Invalid license"}`
-    );
-    $("btn-clear-license").classList.add("hidden");
-    renderDeliverableAsset();
-    return false;
-  }
-
-  state.license = { unlocked: true, payload: res.payload, token: trimmed };
-  $("input-license").value = trimmed;
-  if ($("modal-input-license")) $("modal-input-license").value = trimmed;
-  if (persist) {
-    try {
-      localStorage.setItem(STORAGE_LICENSE_KEY, trimmed);
-      if (res.payload?.p === "*") {
-        localStorage.setItem(GLOBAL_WILDCARD_KEY, trimmed);
-      }
-    } catch {}
-  }
-  setBothFeedback(
-    "status-banner info",
-    state.lang === "zh"
-      ? `✅ Ed25519 本地验签通过！已永久解锁全部 5 项修复交付件（授权：${res.payload.e || (res.payload.p === "*" ? "全站通票 *" : "Pro")}）。`
-      : `✅ Ed25519 verified locally! All 5 deliverables unlocked for ${res.payload.e || (res.payload.p === "*" ? "All-Access *" : "Pro")}.`
-  );
-  $("btn-clear-license").classList.remove("hidden");
-  renderDeliverableAsset();
-  return true;
-}
-
-let currentOrderStamp = "";
-function makeOrderStamp() {
-  const d = new Date();
-  const pad = (n) => String(n).padStart(2, "0");
-  return `GEO-${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`;
-}
-
-function refreshModalOrderBrief() {
-  const plan = state.modalPlan;
+function openDfyModal() {
   const r = state.report;
-  document.querySelectorAll("[data-plan-choice]").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.planChoice === plan);
-  });
-
-  const planMeta =
-    plan === "dfy"
-      ? { title: "GEO Doctor Shopify/WordPress 人工代部署 (DFY)", price: "$199 USD / ¥499 CNY" }
-      : plan === "all-access"
-        ? { title: 'OPC All-Access 全站 14 款工具通票 (p="*")', price: "¥39 CNY / $14.99 USD" }
-        : { title: "GEO Doctor 单站一键修复包 (slug: geo-doctor)", price: "$29 USD / ¥99 CNY" };
-
   const failedTitles = r
     ? r.checks
         .filter((c) => c.status !== "pass")
@@ -563,27 +414,18 @@ function refreshModalOrderBrief() {
     : "- Full site audit pending";
 
   const brief = [
-    `【OPC 订单口令】${currentOrderStamp}`,
-    `【选购方案】${planMeta.title}`,
-    `【订单价格】${planMeta.price}`,
-    `【体检站点】${r?.extracted?.url || $("input-live-url").value || "N/A"} (${r ? `${r.score}/100 ${r.grade}` : "N/A"})`,
+    `【数创引擎工作室 · GEO 人工代部署预约】`,
+    `【服务内容】Shopify / WordPress 人工代部署 ($199 USD / ¥499 CNY · 含2次微调)`,
+    `【目标站点】${r?.extracted?.url || $("input-live-url").value || "N/A"} (${r ? `${r.score}/100 ${r.grade}` : "N/A"})`,
     failedTitles ? `【待修复项】\n${failedTitles}` : null,
-    `【发货请求】请签发对应 OPC1. 离线激活码`,
   ]
     .filter(Boolean)
     .join("\n");
 
   $("order-brief-text").textContent = brief;
-
-  const subject = encodeURIComponent(`[OPC 订单 ${currentOrderStamp}] ${planMeta.title} (${planMeta.price})`);
+  const subject = encodeURIComponent("[数创引擎 · GEO代部署] Shopify/WordPress ($199 / ¥499)");
   const body = encodeURIComponent(brief);
-  $("link-mailto-qq").href = `mailto:${PAYMENT_CONFIG.emailSecondary}?cc=${PAYMENT_CONFIG.emailPrimary}&subject=${subject}&body=${body}`;
-}
-
-function openOrderModal(plan = "all-access") {
-  state.modalPlan = plan;
-  currentOrderStamp = makeOrderStamp();
-  refreshModalOrderBrief();
+  $("link-mailto-qq").href = `mailto:${STUDIO_CONTACT.emailSecondary}?cc=${STUDIO_CONTACT.emailPrimary}&subject=${subject}&body=${body}`;
   $("order-modal").classList.remove("hidden");
 }
 
@@ -656,27 +498,12 @@ function initEvents() {
     });
   });
 
-  $("btn-verify-license").addEventListener("click", () => {
-    handleLicenseVerification($("input-license").value, true);
-  });
-
-  $("btn-clear-license").addEventListener("click", () => {
-    localStorage.removeItem(STORAGE_LICENSE_KEY);
-    state.license = { unlocked: false, payload: null, token: "" };
-    $("input-license").value = "";
-    $("license-feedback").classList.add("hidden");
-    $("btn-clear-license").classList.add("hidden");
-    renderDeliverableAsset();
-  });
-
   $("btn-copy-asset").addEventListener("click", (e) => {
-    if (!state.license.unlocked) return;
     const { text } = getAssetPayload(state.activeAsset);
     copyText(text, e.currentTarget);
   });
 
   $("btn-download-asset").addEventListener("click", () => {
-    if (!state.license.unlocked) return;
     const payload = getAssetPayload(state.activeAsset);
     const content = payload.downloadText || payload.text;
     const blob = new Blob([content], { type: payload.mime });
@@ -688,17 +515,7 @@ function initEvents() {
     URL.revokeObjectURL(url);
   });
 
-  $("btn-order-fixpack").addEventListener("click", () => openOrderModal("fix-pack"));
-  $("btn-overlay-order").addEventListener("click", () => openOrderModal("fix-pack"));
-  $("btn-order-dfy").addEventListener("click", () => openOrderModal("dfy"));
-  $("btn-order-allaccess")?.addEventListener("click", () => openOrderModal("all-access"));
-  $("btn-footer-support")?.addEventListener("click", () => openOrderModal("all-access"));
-  document.querySelectorAll("[data-plan-choice]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      state.modalPlan = btn.dataset.planChoice;
-      refreshModalOrderBrief();
-    });
-  });
+  $("btn-order-dfy").addEventListener("click", openDfyModal);
   $("btn-close-modal").addEventListener("click", () => $("order-modal").classList.add("hidden"));
   $("order-modal").addEventListener("click", (e) => {
     if (e.target === $("order-modal")) $("order-modal").classList.add("hidden");
@@ -707,14 +524,8 @@ function initEvents() {
     copyText($("order-brief-text").textContent, e.currentTarget);
   });
   $("btn-copy-qq-num")?.addEventListener("click", (e) => copyText("3152557994", e.currentTarget));
-  $("btn-copy-qq-mail")?.addEventListener("click", (e) => copyText(PAYMENT_CONFIG.emailSecondary, e.currentTarget));
-  $("btn-copy-gmail-addr")?.addEventListener("click", (e) => copyText(PAYMENT_CONFIG.emailPrimary, e.currentTarget));
-  $("btn-modal-verify")?.addEventListener("click", async () => {
-    const ok = await handleLicenseVerification($("modal-input-license").value, true);
-    if (ok) {
-      setTimeout(() => $("order-modal").classList.add("hidden"), 900);
-    }
-  });
+  $("btn-copy-qq-mail")?.addEventListener("click", (e) => copyText(STUDIO_CONTACT.emailSecondary, e.currentTarget));
+  $("btn-copy-gmail-addr")?.addEventListener("click", (e) => copyText(STUDIO_CONTACT.emailPrimary, e.currentTarget));
 
   $("btn-self-audit").addEventListener("click", () => {
     setMode("url");
@@ -730,14 +541,6 @@ function initEvents() {
 async function bootstrap() {
   initEvents();
   applyLanguage();
-
-  const savedToken = localStorage.getItem(STORAGE_LICENSE_KEY) || localStorage.getItem(GLOBAL_WILDCARD_KEY);
-  if (savedToken) {
-    $("input-license").value = savedToken;
-    await handleLicenseVerification(savedToken, false);
-  }
-
-  // Initial load: self-audit geo-doctor so the user immediately sees a working 100/100 live studio
   await runSelfAudit();
 }
 
